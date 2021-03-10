@@ -6,11 +6,11 @@ const connection = mysql.createConnection({
   // Your username
   user: "root",
   // Your password
-  password: "",
-  database: "employees"
+  password: "Time4change$",
+  database: "tracker"
 });
 
-connection.connect();
+//connection.connect();
 
 // Setting up connection.query to use promises instead of callbacks
 // This allows us to use the async/await syntax
