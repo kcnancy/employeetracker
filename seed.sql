@@ -34,14 +34,14 @@ VALUES
     ('Engineering Manager', 170000.00, 4),
     ('Engineering Lead', 125000.00, 4),
     ('Junior Engineer', 95000.00, 4);
-    
-    SELECT employee.id, employee.first_name, employee.last_name, role.title, department_name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name)
-	AS manager FROM employee
-    LEFT JOIN role ON (employee.role_id = role.id)
-    LEFT JOIN department ON (role.department_id = department.id)
-    LEFT JOIN employee manager ON (manager.id = employee.manager_id)
-    ORDER BY employee.id;
-        
-    
-    
-    
+
+    -- SELECT employee.id, employee.first_name, employee.last_name, role.title, department_name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name)
+	-- AS manager FROM employee
+    -- LEFT JOIN role ON (employee.role_id = role.id)
+    -- LEFT JOIN department ON (role.department_id = department.id)
+    -- LEFT JOIN employee manager ON (manager.id = employee.manager_id)
+    -- ORDER BY employee.id;
+
+ 
+
+
