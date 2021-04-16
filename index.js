@@ -30,6 +30,7 @@ function startEMS(){
                 "View All Employees by Department?",
                 "View All Roles?",
                 "View All Employees by Role",
+                "View Annual Budget by Department",
                 "Update Employee Role?",
                 "Add Employee?",
                 "Add Role?",
@@ -56,6 +57,10 @@ function startEMS(){
 
             case "View All Employees by Role":
             employeesByRole();
+            break;
+
+            case "View Annual Budget by Department":
+            depBudget();
             break;
 
             case "Update Employee Role?":
@@ -136,6 +141,32 @@ function employeesByRole() {
         return;
      })
 }
+
+//function to view annual payroll budget by department
+function depBudget() {
+    inquirer.prompt([
+        {
+            name: "department",
+            type: "input",
+            message: "Which department would you like to see the total utilized budget for?"
+
+        }
+    ]).then((res) => {
+    connection.query = ("SELECT sum(salary) AS Total_Payroll_$ ", {'FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id LEFT JOIN employee on employee.manager_id = employee.id ORDER BY employee.id':
+        (err, res) => {
+        if (err) throw err;
+        console.log('\nHere is the total annual payroll for all existing employees\n');
+        console.table(res);
+
+        loadMainPrompts();
+
+},})
+})
+}
+
+
+
+
 // function to update a current employee role
 function updateEmployeeRole() {
         inquirer.prompt([
@@ -161,7 +192,7 @@ function updateEmployeeRole() {
                 }
 
           ]).then((res) => {
-            connection.query('update employee set ? where ?', [{last_name: res.lastName, first_name: res.firstName, role_id: res.role}, {id: res.id}], (err, res) => {
+            connection.query('UPDATE employee set ? where ?', [{last_name: res.lastName, first_name: res.firstName, role_id: res.role}, {id: res.id}], (err, res) => {
                 if (err) throw err;
                 console.log("Employee Role Updated Successfully");
                 console.table(employeesByRole());
