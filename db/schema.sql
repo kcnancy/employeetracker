@@ -3,7 +3,7 @@ CREATE DATABASE tracker;
 USE tracker;
 CREATE TABLE department (
 	id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-	department_name VARCHAR(30) NOT NULL
+	department_name VARCHAR(40) NOT NULL
     );
 
 CREATE TABLE role (

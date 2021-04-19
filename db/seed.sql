@@ -25,12 +25,19 @@ VALUES
 INSERT INTO role
 	(title, salary, department_id)
 VALUES
- 	('Sales Manager', 150000.00, 1),
-    ('Sales Representative', 100000.00, 2),
-    ('Development Manager', 175000.00, 3),
-    ('Development Staff', 130000.00, 4),
-    ('Human Resources Manager', 110000.00, 5),
-    ('Human Resources Analyst', 75000.00, 6),
-    ('Engineering Manager', 170000.00, 7),
-    ('Engineering Lead', 125000.00, 8),
-    ('Junior Engineer', 95000.00, 9);
+	('Manager', 150000.00, 1),
+    ('Sales Representative', 100000.00, 1),
+    ('Manager', 175000.00, 2),
+    ('Development Staff', 130000.00, 2),
+    ('Manager', 110000.00, 3),
+    ('Human Resources Analyst', 75000.00, 3),
+    ('Manager', 170000.00, 4),
+    ('Engineering Lead', 125000.00, 4),
+    ('Junior Engineer', 95000.00, 4);
+
+
+
+
+ 
+
+
