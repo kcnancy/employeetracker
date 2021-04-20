@@ -33,7 +33,7 @@ function loadMainPrompts() {
           "View All Employees by Role",
           "View All Managers",
           "View Annual Budget by Department",
-          "Update Employee Role?",
+          "Update Employee Name, Role and/or Manager?",
           "Add Employee?",
           "Add Role?",
           "Add Department?",
@@ -50,9 +50,9 @@ function loadMainPrompts() {
           allEmployees();
           break;
 
-          case "View All Departments?":
-              allDepartments();
-              break;
+        case "View All Departments?":
+          allDepartments();
+          break;
 
         case "View All Employees by Department?":
           employeesByDept();
@@ -66,15 +66,15 @@ function loadMainPrompts() {
           employeesByRole();
           break;
 
-          case "View All Managers":
-              allManagers();
-              break;
+        case "View All Managers":
+          allManagers();
+          break;
 
         case "View Annual Budget by Department":
           depBudget();
           break;
 
-        case "Update Employee Role?":
+        case "Update Employee Name, Role and/or Manager?":
           updateEmployeeRole();
           break;
 
@@ -123,17 +123,13 @@ function allEmployees() {
 }
 //function to return a list of all departments
 function allDepartments() {
-    connection.query("SELECT * FROM tracker.department",
-    (err, res) => {
-        if (err) throw err;
+  connection.query("SELECT * FROM tracker.department", (err, res) => {
+    if (err) throw err;
 
-        console.table(res);
-        loadMainPrompts();
-      }
-    )
+    console.table(res);
+    loadMainPrompts();
+  });
 }
-
-
 
 // function to return employees by dept
 function employeesByDept() {
@@ -175,15 +171,16 @@ function employeesByRole() {
 
 //function to view all managers
 function allManagers() {
-    connection.query(
-        "SELECT employee.first_name,employee.last_name, manager_id FROM employee WHERE manager_id IS NULL;",
+  connection.query(
+    "SELECT employee.first_name,employee.last_name, manager_id FROM employee WHERE manager_id IS NULL;",
     (err, res) => {
-        if (err) throw err;
-        console.table(res);
+      if (err) throw err;
+      console.table(res);
 
-        loadMainPrompts();
-        return;
-      });
+      loadMainPrompts();
+      return;
+    }
+  );
 }
 //function to view annual payroll budget by department
 function depBudget() {
@@ -197,15 +194,16 @@ function depBudget() {
       },
     ])
     .then((res) => {
-         connection.query
-        (`SELECT department_name AS department, SUM(role.salary) AS Total_Budget FROM role LEFT JOIN department on role.department_id = department.id WHERE department_name = '${res.department}';`,
+      connection.query(
+        `SELECT department_name AS department, SUM(role.salary) AS Total_Budget FROM role LEFT JOIN department on role.department_id = department.id WHERE department_name = '${res.department}';`,
         (err, res) => {
           if (err) throw err;
           console.log("Here is the total annual salary for your department");
           console.table(res);
 
           loadMainPrompts();
-        });
+        }
+      );
     });
 }
 
@@ -233,6 +231,11 @@ function updateEmployeeRole() {
         message: "What is the new Role ID for this employee?",
         type: "input",
       },
+      {
+        name: "manager_id",
+        message: "What is the Manager ID for this employee?",
+        type: "input",
+      },
     ])
     .then((res) => {
       connection.query(
@@ -242,6 +245,7 @@ function updateEmployeeRole() {
             last_name: res.lastName,
             first_name: res.firstName,
             role_id: res.role,
+            manager_id: res.manager_id,
           },
           { id: res.id },
         ],
@@ -318,7 +322,7 @@ function addRole() {
       {
         type: "input",
         message:
-          "Enter the department ID of new role ('1:Sales, 2:Technology, 3:Human Resources, 4:Engineering'):",
+          "Enter the department ID of new role:",
         name: "dept_id",
       },
     ])
@@ -329,7 +333,7 @@ function addRole() {
         (err, res) => {
           if (err) throw err;
           console.log("New Role added successfully.");
-         employeeRoles();
+          employeeRoles();
         }
       );
     });
@@ -350,9 +354,9 @@ function addDept() {
         "insert into department set ?",
         [{ department_name: res.dept }],
         (err, res) => {
-        console.log("New department successfully added.");
+          console.log("New department successfully added.");
 
-        allDepartments();
+          allDepartments();
         }
       );
     });
@@ -376,7 +380,7 @@ function deleteEmp() {
           console.log(
             "Employee successfully deleted, updated table shown below."
           );
-          allEmployee();
+          allEmployees();
         }
       );
     });
@@ -393,15 +397,15 @@ function deleteDept() {
     ])
     .then((res) => {
       connection.query(
-        "delete from department where ?",
+        ("delete from department where ?"),
         [{ department_name: res.name }],
-        (err, res) => {
+        (err, _res) => {
           if (err) throw err;
           console.log(
             "Department successfully deleted, updated table shown below"
           );
-          console.table(employeesByDept());
-          loadMainPrompts();
+
+          allDepartments();
         }
       );
     });
@@ -418,18 +422,17 @@ function deleteRole() {
     ])
     .then((res) => {
       connection.query(
-        "delete from role_id where ?",
-        [{ Title: res.title }],
-        (err, res) => {
-          console.log(
+        `DELETE FROM role
+                    WHERE title = ${JSON.stringify(res.title)}`);
+
+          console.log (
             "Employee Role successfully deleted, updated table shown below"
           );
-         (employeeRoles);
+          employeeRoles();
+        });
+};
+    ;
 
-        }
-      );
-    });
-}
 
 function quit() {
   console.log("That's all for now...Goodbye");

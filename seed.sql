@@ -17,10 +17,10 @@ VALUES
     ('Cindy', 'Rae', 4, 3),
     ('Thad', 'Lee', 4, 3),
     ('Lisa', 'Mason', 5, NULL),
-    ('Amanda', 'Cranker', 6, 5),
+    ('Amanda', 'Cranker', 6, 6),
     ('Ripken', 'Homerson', 7, NULL),
-    ('Rich', 'Wizard', 8, 7),
-    ('Don', 'Adams', 9, 7);
+    ('Rich', 'Wizard', 8, 8),
+    ('Don', 'Adams', 9, 8);
 
 INSERT INTO role
 	(title, salary, department_id)
