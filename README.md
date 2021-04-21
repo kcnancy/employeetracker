@@ -32,7 +32,7 @@
 
 ### 🏠 [Homepage](https://github.com/kcnancy/employeetracker#readme)
 
-### ✨ [Demo](https://drive.google.com/file/d/1VeQaN_ap3RdvRAgBew1iUG_z-TgpK44C/view)
+### ✨ [Demo](https://drive.google.com/file/d/1VeQaN_ap3RdvRAgBew1iUG_z-TgpK44C/view?usp=sharing)
 
 ## Install
 
